@@ -91,11 +91,11 @@ for ticker2 in ticker_list:
 
         ytd = wb.DataReader(ticker2, 'yahoo', start = inception, end = today)
 
-        allTime = wb.DataReader(ticker2, 'yahoo', start = full, end = today)
+        historical = wb.DataReader(ticker2, 'yahoo', start = full, end = today)
 
 
         ytd['Returns'] = ytd['Close'].pct_change()
-        allTime['Returns'] = allTime['Close'].pct_change()
+        historical['Returns'] = historical['Close'].pct_change()
 
         st.write('YTD Closing Prices')
         fig10 = go.Figure()
@@ -114,15 +114,15 @@ for ticker2 in ticker_list:
 
         st.write('Historical Closing Prices')
         fig11 = go.Figure()
-        fig11.add_trace(go.Candlestick(x=allTime.index,
-        open = allTime['Open'],
-        high = allTime['High'],
-        low = allTime['Low'],
-        close = allTime['Close'], name = 'Historical Closing Prices'))
+        fig11.add_trace(go.Candlestick(x=historical.index,
+        open = historical['Open'],
+        high = historical['High'],
+        low = historical['Low'],
+        close = historical['Close'], name = 'Historical Closing Prices'))
 
         fig11.update_xaxes(type = 'category')
         fig11.update_layout(height=600, width=600)
         st.plotly_chart(fig11, use_container_width = True)
 
         st.write('Historical Closing Prices')
-        st.dataframe(allTime)
+        st.dataframe(historical)
